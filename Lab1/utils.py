@@ -1,4 +1,4 @@
-def MoveGen(grid, node, m, n):
+def MoveGen(grid, node, m, n): #finding neighbours of a node in a list
     x_cor = node.x      # x-coordinate of the node
     y_cor = node.y      # y-coordinate of the node
     neighbours = []

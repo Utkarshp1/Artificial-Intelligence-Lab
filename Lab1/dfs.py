@@ -4,15 +4,15 @@ from utils import GoalTest
 def dfs_visit(grid, node, m, n, target_x, target_y):
     global success
     node.color = 'gray'     # vertex colored gray to indicate visiting node
-    print("hello")
+    
     if GoalTest(node.x, node.y, target_x, target_y):
         node.color = 'black'
         success = True
         return
-    print("hello1")
+    
     neighbors = MoveGen(grid, node, m, n)   # neighbors of the node
     # neighbors = neighbors[::-1]
-    print(len(neighbors))
+    
     for neighbor in neighbors:
         if success:
             break

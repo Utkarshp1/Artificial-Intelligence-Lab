@@ -2,6 +2,8 @@ import sys
 from Node import Node
 from utils import MoveGen
 from dfs import dfs_visit
+from utils import GoalTest
+from bfs import bfs
 
 file = open(sys.argv[1], "r")   #Reading test case file
 choice = file.readline()           # 0 for BFS, 1 for DFS, 2 for DFID 
@@ -39,9 +41,21 @@ n = len(grid[0])            # Number of columns in the state space
 # for i in result:
     # print(i)  
 grid[0][0].color = 'gray'
-grid[0][0].dis = 0
-    
+grid[0][0].dis = 1
+
+if choice==0:
+    bfs(grid,m,n,goal_x,goal_y)    
 if choice == 1:
     dfs_visit(grid, grid[0][0], m, n, goal_x, goal_y)
     
 print(grid[goal_x][goal_y].distance)
+
+# for i in range(len(grid)):
+    # for j in range(len(grid[0])):
+        # if grid[i][j].color == 'black':
+            # grid[i][j].value = '0'
+
+# for i in range(len(grid)):
+    # for j in range(len(grid[0])):
+        # print(grid[i][j].value, end="")
+    # print()
