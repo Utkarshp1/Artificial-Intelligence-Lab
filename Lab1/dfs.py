@@ -12,9 +12,9 @@ def dfs_visit(grid, node, m, n, target_x, target_y):
         return
     
     neighbors = MoveGen(grid, node, m, n)   # neighbors of the node
+    neighbors = neighbors[::-1]
     # consider the node only if not visited
     neighbors = [neighbor for neighbor in neighbors if neighbor.color == "white"]
-    # neighbors = neighbors[::-1]
     
     for neighbor in neighbors:          
         neighbor.color = "gray"

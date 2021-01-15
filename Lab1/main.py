@@ -5,6 +5,7 @@ from dfs import dfs_visit
 from utils import GoalTest
 from bfs import bfs
 from utils import trace_path
+from dfid import dfid
 
 file = open(sys.argv[1], "r")   #Reading test case file
 choice = file.readline()           # 0 for BFS, 1 for DFS, 2 for DFID 
@@ -53,9 +54,11 @@ if choice == 1:
         for j in range(len(grid[0])):
             if grid[i][j].color == "black":
                 count += 1
+if choice == 2:
+    count = dfid(grid, goal_x, goal_y, m, n)
     
-print(count)
-print(grid[goal_x][goal_y].distance)
+# print(count)
+# print(grid[goal_x][goal_y].distance)
 
 trace_path(grid, goal_x, goal_y)
 
@@ -64,7 +67,11 @@ trace_path(grid, goal_x, goal_y)
         # if grid[i][j].color == 'black':
             # grid[i][j].value = '0'
 # print(len(grid), len(grid[0]))
-for i in range(len(grid)):
-    for j in range(len(grid[0])):
-        print(grid[i][j].value, end="")
-    print()
+
+with open(sys.argv[2], "w") as file:
+    file.write(str(count) + "\n")      # Number of states explored
+    file.write(str(grid[goal_x][goal_y].distance) + "\n") # Length of the path found
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            file.write(grid[i][j].value)
+        file.write("\n")
