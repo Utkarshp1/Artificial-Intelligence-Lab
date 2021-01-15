@@ -4,6 +4,7 @@ from utils import MoveGen
 from dfs import dfs_visit
 from utils import GoalTest
 from bfs import bfs
+from utils import trace_path
 
 file = open(sys.argv[1], "r")   #Reading test case file
 choice = file.readline()           # 0 for BFS, 1 for DFS, 2 for DFID 
@@ -41,21 +42,29 @@ n = len(grid[0])            # Number of columns in the state space
 # for i in result:
     # print(i)  
 grid[0][0].color = 'gray'
-grid[0][0].dis = 1
+grid[0][0].distance = 1
 
+count = 0
 if choice==0:
-    bfs(grid,m,n,goal_x,goal_y)    
+    count = bfs(grid,m,n,goal_x,goal_y)    
 if choice == 1:
     dfs_visit(grid, grid[0][0], m, n, goal_x, goal_y)
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if grid[i][j].color == "black":
+                count += 1
     
+print(count)
 print(grid[goal_x][goal_y].distance)
+
+trace_path(grid, goal_x, goal_y)
 
 # for i in range(len(grid)):
     # for j in range(len(grid[0])):
         # if grid[i][j].color == 'black':
             # grid[i][j].value = '0'
-
-# for i in range(len(grid)):
-    # for j in range(len(grid[0])):
-        # print(grid[i][j].value, end="")
-    # print()
+# print(len(grid), len(grid[0]))
+for i in range(len(grid)):
+    for j in range(len(grid[0])):
+        print(grid[i][j].value, end="")
+    print()

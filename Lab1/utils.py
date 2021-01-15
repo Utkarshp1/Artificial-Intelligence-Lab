@@ -14,7 +14,15 @@ def MoveGen(grid, node, m, n): #finding neighbours of a node in a list
         neighbours.append(grid[x_cor][y_cor-1])
     return neighbours
     
-def GoalTest(x,y,goal_x,goal_y): #returning true if target reached goal state otherwise returns false
-    if x == goal_x and y == goal_y:
+def GoalTest(x,y,target_x,target_y): #returning true if target reached goal state otherwise returns false
+    if x == target_x and y == target_y:
         return True
     return False
+    
+def trace_path(grid, target_x, target_y):
+    back_track_node = grid[target_x][target_y]
+    while back_track_node is not None:          # backtracking the path
+        x_cor = back_track_node.x
+        y_cor = back_track_node.y
+        grid[x_cor][y_cor].value = "0"
+        back_track_node = back_track_node.parent
