@@ -1,4 +1,4 @@
-def MoveGen(grid, node, m, n):
+def MoveGen(grid, node, m, n): #finding neighbours of a node in a list
     x_cor = node.x      # x-coordinate of the node
     y_cor = node.y      # y-coordinate of the node
     neighbours = []
@@ -13,3 +13,8 @@ def MoveGen(grid, node, m, n):
     if y_cor-1 >= 0 and grid[x_cor][y_cor-1].value not in barriers:   # Left
         neighbours.append(grid[x_cor][y_cor-1])
     return neighbours
+
+def GoalTest(x,y,goal_x,goal_y): #returning true if target reached goal state otherwise returns false
+    if x == goal_x and y == goal_y:
+        return True
+    return False
