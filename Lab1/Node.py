@@ -8,4 +8,4 @@ class Node:
         self.y = -1
 
     def __str__(self):   # printing
-        return self.value + " " + str(self.x) + " " + str(self.y) + " dis: " + str(self.distance)
+        return self.value + " " + str(self.x) + " " + str(self.y) + " ditance: " + str(self.distance)
