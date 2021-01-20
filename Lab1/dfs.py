@@ -31,7 +31,7 @@ def dfs_visit(grid, node, m, n, target_x, target_y):
     # Finding the states which can be reached from the given state
     neighbors = MoveGen(grid, node, m, n)
     
-    neighbors = neighbors[::-1]       # Uncomment for alternating the scheme
+    # neighbors = neighbors[::-1]       # Uncomment for alternating the scheme
     
     # consider the node only if not visited
     neighbors = [neighbor for neighbor in neighbors if neighbor.color == "white"]

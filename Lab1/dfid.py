@@ -77,7 +77,7 @@ def dfs_visit(grid, node, target_x, target_y, depth, m, n):
     
     # Finding the states which can be reached from the given state
     neighbors = MoveGen(grid, node, m, n)   
-    neighbors = neighbors[::-1]       # Uncomment for the alternative scheme
+    # neighbors = neighbors[::-1]       # Uncomment for the alternative scheme
     
     # Visiting each neighbor node
     for neighbor in neighbors:
