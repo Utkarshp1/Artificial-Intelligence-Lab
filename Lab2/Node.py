@@ -8,3 +8,7 @@ class Node:
     def __eq__(self, other):
         if other is not None:
             return self.blocks == other.blocks
+            
+    def __lt__(self, other):
+        if other is not None:
+            return self.h < other.h

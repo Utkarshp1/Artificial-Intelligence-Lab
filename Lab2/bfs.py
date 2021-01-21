@@ -7,23 +7,25 @@ def best_first_search(start_node, target_node):
     open_list = PriorityQueue()
     frontier = []
     closed_list = []
-    open_list.put((start_node.h, start_node))
+    open_list.put(start_node)
     frontier.append(start_node)
     while not open_list.empty():
         node = open_list.get()
+        print(node.blocks, node.h)
         count +=1
         
-        if goal_test(node[1], target_node):
-            target_node.parent = node[1]
-            return
+        if goal_test(node, target_node):
+            target_node.parent = node
+            return count
             
-        for neighbor in move_gen(node[1]):
+        for neighbor in move_gen(node, target_node):
             if neighbor not in frontier and neighbor not in closed_list:
-                neighbor.parent = node[1]
-                open_list.put((neighbor.h, neighbor))
+                # print(neighbor.blocks, neighbor.h)
+                neighbor.parent = node
+                open_list.put(neighbor)
                 frontier.append(neighbor)
         
-        closed_list.append(node[1])
+        closed_list.append(node)
         
     return count        
          
