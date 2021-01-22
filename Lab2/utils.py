@@ -1,5 +1,6 @@
 from Node import Node
-from heuristic import heuristic
+from heuristic import heuristic1
+from heuristic import heuristic2
 import copy
 
 def read_input(node, file):
@@ -11,7 +12,7 @@ def read_input(node, file):
         blocks_list = [int(block) for block in blocks_list if len(block) > 0]
         node.blocks.append(blocks_list)
         
-def move_gen(node, target_node):
+def move_gen(node, target_node, heuristic):
     neighbours = []
     for i, blocks_list in enumerate(node.blocks):
         if len(blocks_list) > 0:

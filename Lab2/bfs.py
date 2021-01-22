@@ -2,7 +2,7 @@ from queue import PriorityQueue
 from utils import goal_test
 from utils import move_gen
 
-def best_first_search(start_node, target_node):
+def best_first_search(start_node, target_node, heuristic):
     count = 0
     open_list = PriorityQueue()
     frontier = []
@@ -18,7 +18,7 @@ def best_first_search(start_node, target_node):
             target_node.parent = node
             return count
             
-        for neighbor in move_gen(node, target_node):
+        for neighbor in move_gen(node, target_node, heuristic):
             if neighbor not in frontier and neighbor not in closed_list:
                 # print(neighbor.blocks, neighbor.h)
                 neighbor.parent = node
