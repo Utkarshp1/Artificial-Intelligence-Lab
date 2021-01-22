@@ -36,11 +36,11 @@ def heuristic1(target_node,current_node):
     
 def heuristic2(target_node, current_node):
     '''
-        This function looks at the entire pile that the block is 
-        resting on. If the configuration of the pile is correct, 
-        with respect to the goal, it subtracts one for every block 
-        in the pile, or else it adds one for every block in that pile.
-        For example, the heuristic value for the start node is 6 = 
+        (Manhattan Distance) This function looks at the entire pile 
+        that the block is resting on. If the configuration of the pile 
+        is correct, with respect to the goal, it subtracts one for every 
+        block in the pile, or else it adds one for every block in that 
+        pile. For example, the heuristic value for the start node is 6 = 
         0 + 1 + 2 + 0 + 1 + 2. With such a function we are looking 
         for smaller values of the heuristic function.
         
