@@ -9,6 +9,12 @@ from heuristic import heuristic2
 from heuristic import heuristic3
 from hill import hill_climb
 
+if len(sys.argv) != 4:
+    print("Usage: ./run.sh [INPUT TEXT FILE] [ALGORITHM CHOICE] [HEURISTIC CHOICE]")
+    print("Algorithm Choice:\n\t-bfs: Best First Search\n\t-hill: Hill Climbing")
+    print("Heuristic Choice:\n\tA number between 1 and 3 (both inclusive)")
+    quit()
+
 file = open(sys.argv[1], "r")       # Reading test case file
 file.readline()                     
 
