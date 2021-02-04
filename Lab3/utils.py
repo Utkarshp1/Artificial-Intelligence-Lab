@@ -46,13 +46,16 @@ def evaluate_node(node, clauses):
         
         if result:
             num_satisfied += 1
-    return num_satisfied
+    return -num_satisfied
     
 def is_tautology(clause):
-    for i in range(3):
+    for i in range(len(clause)):
         clause[i].is_not = clause[i].is_not | 1
     
-    if len(set(clause)) == 3:
+    if len(set(clause)) == len(clause):
         return False
         
-    return True     
+    return True 
+
+def goal_test(node, num_clauses):
+    return node.e == -num_clauses

@@ -6,6 +6,8 @@ from utils import is_tautology
 from utils import evaluate_node
 from utils import move_gen
 from Node import Node
+from BeamSearch import BeamSearch
+from VariableNeighbourhoodDescent import VariableNeighbourhoodDescent
 
 file = open(sys.argv[1], "w")
 n = 4
@@ -29,9 +31,20 @@ for clause in clauses:
             file.write(str(literal))
     file.write("\n")
     
-start_node = Node([0, 0, 0, 0])
+start_node = Node([0, 0, 0, 1])
+start_node.e = evaluate_node(start_node, clauses)
 # print(start_node)
 # for i in move_gen(start_node.values, 4, clauses):
     # print(i.values, i.e)
 
 # print(evaluate_node(start_node, clauses))
+
+# print(BeamSearch(2, clauses))
+print(VariableNeighbourhoodDescent(start_node, n, clauses))
+
+# Good test case for VND with initial [0, 0, 0, 0] sol [1, 0, 1, 1]
+# ~a + d + ~b
+# c + a + ~d
+# ~a + c + b
+# a + ~d + ~b
+# d + b + a
