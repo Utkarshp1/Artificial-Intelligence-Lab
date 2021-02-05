@@ -1,5 +1,5 @@
-~a + ~c + 
-~a + ~b + 
-b + ~c + 
-c + ~d + 
-~b + ~c + 
+~a + b + ~c
+c + b + a
+~a + c + b
+d + c + ~a
+~d + ~b + a

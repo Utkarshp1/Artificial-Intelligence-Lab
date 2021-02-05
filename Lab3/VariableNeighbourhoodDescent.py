@@ -5,11 +5,28 @@ from utils import move_gen
 from utils import goal_test
 
 def VariableNeighbourhoodDescent(start_node, num_variable, clauses):
-    states_explored = 1
-    current_node = start_node
+    '''
+        This function implements the Variable Neighbourhood Descent
+        algorithm.
+        
+        Arguments:
+        ----------
+            - start_node: Start/Initial node for the algorithm
+            - num_variable: Number of variables in the formula
+            - clauses: The list of clauses to be satisfied
+            
+        
+        Returns:
+        --------
+            The solution state for given set of clauses i.e the set of
+            values for each variable to satisfy all the clauses.
+    '''
+    
+    states_explored = 1             # Start state is visited/explored
+    current_node = start_node       # Initialize the current _node as start_node
     
     if goal_test(start_node, len(clauses)):
-        print(states_explored)
+        print("Number of States explored: ", states_explored)
         return start_node
     
     num_bit = 1
@@ -19,7 +36,6 @@ def VariableNeighbourhoodDescent(start_node, num_variable, clauses):
         
         # Search over each neighbor
         for neighbor in move_gen(current_node.values, num_bit, clauses):
-            print(neighbor, neighbor.e)
             open_list.put(neighbor)
             states_explored += 1    # increment the number of states explored
             
@@ -27,12 +43,14 @@ def VariableNeighbourhoodDescent(start_node, num_variable, clauses):
         
         # Check whether the current node is the goal node
         if goal_test(node, len(clauses)):
-            print(states_explored)
+            print("Number of States explored: ", states_explored)
             return node
-            
+        
+        # If stuck in Local Minima then change neighborhood relation
         elif node.e >= current_node.e:
             num_bit +=1 
-            
+        
+        # Update the current node    
         else:
             current_node = node
-        
+            

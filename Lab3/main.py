@@ -11,57 +11,51 @@ from BeamSearch import BeamSearch
 from VariableNeighbourhoodDescent import VariableNeighbourhoodDescent
 from TabuSearch import TabuSearch
 
-file = open(sys.argv[1], "w")
+if len(sys.argv) != 4:
+    print("Usuage: ./run.sh [Beam-Width] [Tabu-Tenure] [OUTPUT-FILE]")
+    quit()
+
 n = 4
 k = 5
 
-literals = [Literal(i, j) for i in range(4) for j in range(2)]
-clauses = set()
+# Creating list of all possible literals to choose from
+literals = [Literal(i, j) for i in range(n) for j in range(2)]
+clauses = set()         # Initializing a set for all possible literals
 
-while len(clauses) != 5:
-    clause = np.random.choice(literals, size=2, replace=False)
+# Randomly generating clauses
+while len(clauses) != k:
+    # Randomly generate clause with each literal having probability
+    # of 1/2n
+    clause = np.random.choice(literals, size=3, replace=False)
     copy_clause = copy.deepcopy(clause)
+    # Check whether the generates clause is a tautology 
     if not is_tautology(copy_clause):
         clauses.add(frozenset(clause))
-    
+
+# Wrting the clauses generated into a file
+file = open(sys.argv[3], "w")    
 for clause in clauses:
     for i, literal in enumerate(clause):
         if i != 2:
             file.write(str(literal))
-            file.write(" + ")
+            file.write(" + ")           # + for OR operation
         else:
             file.write(str(literal))
     file.write("\n")
-    
-start_node = Node([0, 1, 1, 1])
+
+# Initializing start node    
+start_node = Node([1, 0, 0, 1])
 start_node.e = evaluate_node(start_node, clauses)
 
-# list_nvalid = []
-# neighbours,list_nvalid = newmovegen(start_node.values,clauses,list_nvalid)
-# for i in neighbours:
-#     print(i.values,i.e)
-# print(list_nvalid)
-# neighbours,list_nvalid = newmovegen(start_node.values,clauses,list_nvalid)
-# for j in neighbours:
-#     print(j.values,j.e)
-# print(list_nvalid)
-# neighbours,list_nvalid = newmovegen(start_node.values,clauses,list_nvalid)
-# for j in neighbours:
-#     print(j.values,j.e)
-# print(list_nvalid)
-# print(start_node)
-# for i in move_gen(start_node.values, 4, clauses):
-    # print(i.values, i.e)
+beam_width = int(sys.argv[1])
+tabu_tenure = int(sys.argv[2])
 
-# print(evaluate_node(start_node, clauses))
-
-# print(BeamSearch(2, clauses))
-# print(VariableNeighbourhoodDescent(start_node, n, clauses))
-print(TabuSearch(start_node, 2, clauses))
-
-# Good test case for VND with initial [0, 0, 0, 0] sol [1, 0, 1, 1]
-# ~a + d + ~b
-# c + a + ~d
-# ~a + c + b
-# a + ~d + ~b
-# d + b + a
+print("Beam Search")
+print("------------")
+print("Solution:", BeamSearch(beam_width, clauses))
+print("\nVariable Neighbourhood Descent")
+print("------------------------------")
+print("Solution:", VariableNeighbourhoodDescent(start_node, n, clauses))
+print("\nTabu Search")
+print("-----------")
+print("Solution:", TabuSearch(start_node, tabu_tenure, clauses))
