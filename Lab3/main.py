@@ -5,6 +5,7 @@ from Literal import Literal
 from utils import is_tautology
 from utils import evaluate_node
 from utils import move_gen
+from utils import newmovegen
 from Node import Node
 from BeamSearch import BeamSearch
 from VariableNeighbourhoodDescent import VariableNeighbourhoodDescent
@@ -31,8 +32,22 @@ for clause in clauses:
             file.write(str(literal))
     file.write("\n")
     
-start_node = Node([0, 0, 0, 1])
+start_node = Node([0, 0, 0, 0])
 start_node.e = evaluate_node(start_node, clauses)
+
+# list_nvalid = []
+# neighbours,list_nvalid = newmovegen(start_node.values,clauses,list_nvalid)
+# for i in neighbours:
+#     print(i.values,i.e)
+# print(list_nvalid)
+# neighbours,list_nvalid = newmovegen(start_node.values,clauses,list_nvalid)
+# for j in neighbours:
+#     print(j.values,j.e)
+# print(list_nvalid)
+# neighbours,list_nvalid = newmovegen(start_node.values,clauses,list_nvalid)
+# for j in neighbours:
+#     print(j.values,j.e)
+# print(list_nvalid)
 # print(start_node)
 # for i in move_gen(start_node.values, 4, clauses):
     # print(i.values, i.e)
@@ -40,7 +55,7 @@ start_node.e = evaluate_node(start_node, clauses)
 # print(evaluate_node(start_node, clauses))
 
 # print(BeamSearch(2, clauses))
-print(VariableNeighbourhoodDescent(start_node, n, clauses))
+# print(VariableNeighbourhoodDescent(start_node, n, clauses))
 
 # Good test case for VND with initial [0, 0, 0, 0] sol [1, 0, 1, 1]
 # ~a + d + ~b
