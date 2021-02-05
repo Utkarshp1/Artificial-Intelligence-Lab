@@ -9,6 +9,7 @@ from utils import newmovegen
 from Node import Node
 from BeamSearch import BeamSearch
 from VariableNeighbourhoodDescent import VariableNeighbourhoodDescent
+from TabuSearch import TabuSearch
 
 file = open(sys.argv[1], "w")
 n = 4
@@ -18,7 +19,7 @@ literals = [Literal(i, j) for i in range(4) for j in range(2)]
 clauses = set()
 
 while len(clauses) != 5:
-    clause = np.random.choice(literals, size=3, replace=False)
+    clause = np.random.choice(literals, size=2, replace=False)
     copy_clause = copy.deepcopy(clause)
     if not is_tautology(copy_clause):
         clauses.add(frozenset(clause))
@@ -32,7 +33,7 @@ for clause in clauses:
             file.write(str(literal))
     file.write("\n")
     
-start_node = Node([0, 0, 0, 0])
+start_node = Node([0, 1, 1, 1])
 start_node.e = evaluate_node(start_node, clauses)
 
 # list_nvalid = []
@@ -56,6 +57,7 @@ start_node.e = evaluate_node(start_node, clauses)
 
 # print(BeamSearch(2, clauses))
 # print(VariableNeighbourhoodDescent(start_node, n, clauses))
+print(TabuSearch(start_node, 2, clauses))
 
 # Good test case for VND with initial [0, 0, 0, 0] sol [1, 0, 1, 1]
 # ~a + d + ~b

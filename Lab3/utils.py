@@ -60,24 +60,28 @@ def is_tautology(clause):
 def goal_test(node, num_clauses):
     return node.e == -num_clauses
 
-def newmovegen(node,clauses,list_nvalid):
+def newmovegen(node,clauses,memory):
     neighbors = []
     for i in range(len(node)):
         copy_node = copy.deepcopy(node)
         neighbors.append(Node(copy_node))
         neighbors[i].values[i] = neighbors[i].values[i] ^ 1
         neighbors[i].e = evaluate_node(neighbors[i], clauses)
-    x = copy.deepcopy(list_nvalid)
-    x.sort()
-    for i in reversed(x):
-        del neighbors[i]
-    minimum = 1
-    for i in neighbors:
-        if i.e<minimum:
-            minimum=i.e
-    for i in neighbors:
-        if i.e==minimum:
-            for j in range(len(i.values)):
-                if i.values[j]!=node[j] and j not in list_nvalid:
-                    list_nvalid.append(j)
-    return neighbors,list_nvalid
+    # x = copy.deepcopy(list_nvalid)
+    # x.sort()
+    for i, j in enumerate(memory[::-1]):
+        if j != 0:
+           del neighbors[len(memory)-i-1] 
+    
+    # for i in reversed(x):
+        # del neighbors[i]
+    # minimum = 1
+    # for i in neighbors:
+        # if i.e<minimum:
+            # minimum=i.e
+    # for i in neighbors:
+        # if i.e==minimum:
+            # for j in range(len(i.values)):
+                # if i.values[j]!=node[j] and j not in list_nvalid:
+                    # list_nvalid.append(j)
+    return neighbors
