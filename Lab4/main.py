@@ -21,8 +21,8 @@ for i in range(num_cities):
     city_distances.append(distances)
     
 # print(city_distances[-1])
-
-ant = AntColony(alpha=8, beta=8, rho=0.2, Q=0.1, city_distances=city_distances, max_iter=50, num_ants=100)
+# print(len(city_distances))
+ant = AntColony(alpha=4.0675, beta=6, rho=0.6, Q=1, city_distances=city_distances, max_iter=100, num_ants=100)
 ant.optimisation()
 print(ant.best_cost)
 print(ant.best_tour)

@@ -7,7 +7,7 @@ class Ant:
         self.tour_cost = 0
         
     def construct_tour(self, pheromones, distances, alpha, beta):
-        start_node = random.randint(0, self.num_cities)
+        start_node = random.randint(0, self.num_cities-1)
         visited_cities = set()
         visited_cities.add(start_node)
         
@@ -26,9 +26,8 @@ class Ant:
             self.path.append(next_city)
             
             self.tour_cost += distances[i][next_city]
-            
+
             i = next_city
-            print(i)
-        
+            
         return self.tour_cost
             
