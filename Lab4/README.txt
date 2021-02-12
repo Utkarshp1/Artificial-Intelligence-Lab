@@ -1,3 +1,5 @@
+chmod u+x run.sh
+
 Run the code using the command:
 ./run.sh [INPUT-FILE]
 
