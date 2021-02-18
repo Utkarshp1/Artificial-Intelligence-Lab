@@ -1,5 +1,7 @@
 import sys
-from AntColony import AntColony 
+from AntColony import AntColony
+import time
+import matplotlib.pyplot as plt
 
 file = open(sys.argv[1], "r") 
 type = file.readline()
@@ -22,7 +24,14 @@ for i in range(num_cities):
     
 # print(city_distances[-1])
 # print(len(city_distances))
-ant = AntColony(alpha=8, beta=8, rho=0.2, Q=0.1, city_distances=city_distances, max_iter=100, num_ants=num_cities)
+start_time = time.time()
+ant = AntColony(alpha=8, beta=9, rho=0.18, Q=10, city_distances=city_distances, max_iter=num_cities, num_ants=2*num_cities//5)
 ant.optimisation()
+print(time.time()-start_time)
 print(ant.best_cost)
 print(ant.best_tour)
+print(ant.tours)
+
+plt.figure()
+plt.plot(ant.tours)
+plt.savefig("graph.png")

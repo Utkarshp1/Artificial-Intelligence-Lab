@@ -15,6 +15,7 @@ class AntColony:
         self.best_cost = float('inf')
         self.best_tour = None
         self.best_index = None
+        self.tours = []
         
     def optimisation(self):
         for i in range(self.max_iter):
@@ -22,11 +23,15 @@ class AntColony:
             
             tour_costs = [ant.construct_tour(self.pheromones, self.city_distances, 
                           self.alpha, self.beta) for ant in ants]
-            
+                          
             [self.set_best_index(i) for i in range(len(tour_costs)) if tour_costs[i] < self.best_cost]
             
-            self.best_cost = tour_costs[self.best_index]
-            self.best_tour = ants[self.best_index].path
+            if self.best_index:
+                self.best_cost = tour_costs[self.best_index]
+                self.best_tour = ants[self.best_index].path
+                self.tours.append(tour_costs[self.best_index])
+                
+            self.set_best_index(None)
             
             for index, ant in enumerate(ants):
                 delta_pheromone = [[0 for i in range(self.num_cities)] for j in range(self.num_cities)]
