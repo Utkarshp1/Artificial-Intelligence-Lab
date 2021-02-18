@@ -28,11 +28,11 @@ class AntColony:
             self.best_cost = tour_costs[self.best_index]
             self.best_tour = ants[self.best_index].path
             
-            for ant in ants:
+            for index, ant in enumerate(ants):
                 delta_pheromone = [[0 for i in range(self.num_cities)] for j in range(self.num_cities)]
                 for k, i in enumerate(ant.path):
                     j = ant.path[(k+1)%self.num_cities]
-                    delta_pheromone[i][j] += self.Q/self.city_distances[i][j]
+                    delta_pheromone[i][j] += self.Q/tour_costs[index]
                     
             for u in range(self.num_cities):
                 for v in range(self.num_cities):
