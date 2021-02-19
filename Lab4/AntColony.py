@@ -1,7 +1,8 @@
 from Ant import Ant
+import time
 
 class AntColony:
-    def __init__(self, alpha, beta, rho, Q, city_distances, max_iter, num_ants, sigma, init_pheromone=0.1):
+    def __init__(self, alpha, beta, rho, Q, city_distances, max_iter, num_ants, sigma, init_pheromone=10**(-6)):
         self.alpha = alpha
         self.beta = beta
         self.rho = rho
@@ -16,11 +17,15 @@ class AntColony:
         self.best_cost = float('inf')
         self.best_tour = None
         self.best_index = None
-        self.tours = []
         self.omega = int(0.1*self.num_cities)
         
-    def optimisation(self):
+    def optimisation(self, start_time):
         for i in range(self.max_iter):
+        
+            if time.time() - start_time >= 290:
+                print("Iteration:", i)
+                break
+            
             ants = [Ant(self.num_cities) for j in range(self.num_ants)]
             
             tour_costs = [ant.construct_tour(self.pheromones, self.city_distances,
@@ -33,7 +38,6 @@ class AntColony:
             if self.best_index:
                 self.best_cost = tour_costs[self.best_index]
                 self.best_tour = ants[self.best_index].path
-                self.tours.append(tour_costs[self.best_index])
                 
             self.set_best_index(None)
             
@@ -52,7 +56,7 @@ class AntColony:
                     
             elitist_pheromone = [[0 for i in range(self.num_cities)] for j in range(self.num_cities)]
             for k, i in enumerate(self.best_tour):
-                j = ant.path[(k+1)%self.num_cities]
+                j = self.best_tour[(k+1)%self.num_cities]
                 elitist_pheromone[i][j] = self.sigma*self.Q/self.best_cost
                     
             for u in range(self.num_cities):
