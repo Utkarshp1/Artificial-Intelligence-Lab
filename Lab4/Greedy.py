@@ -82,6 +82,7 @@ def Greedy(city_distances, num_cities):
         if cost < best_cost:
             print(cost)
             print(tour)
+            print("...................................................................................")
             best_cost = cost
             
     return best_cost, tour
