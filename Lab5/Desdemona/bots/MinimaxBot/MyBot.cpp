@@ -104,15 +104,15 @@ int MyBot::minimax(OthelloBoard &board, int max_depth, Turn turn, int alpha, int
 					if (value > best) {
 						best = value;
 					}
-					if (best > alpha) {
-						alpha = best;
-					}
-					if (alpha <= beta) {
-						continue;
-					}
-					else {
-						break;
-					}
+					// if (best > alpha) {
+						// alpha = best;
+					// }
+					// if (alpha <= beta) {
+						// continue;
+					// }
+					// else {
+						// break;
+					// }
 				}
 				else {
 					return minimum_int;
@@ -130,21 +130,21 @@ int MyBot::minimax(OthelloBoard &board, int max_depth, Turn turn, int alpha, int
 				if (value < best) {
 					best = value;
 				}
-				if (best < beta) {
-					beta = best;
-				}
-				if (alpha <= beta) {
-					continue;
-				}
-				else {
-					break;
-				}
+				// if (best < beta) {
+					// beta = best;
+				// }
+				// if (alpha <= beta) {
+					// continue;
+				// }
+				// else {
+					// break;
+				// }
 			}
 			return best;
 		}
 	}
 	else {
-		return heuristic3(board_copy);
+		return heuristic1(board_copy);
 		// return 0;
 	}
 }
