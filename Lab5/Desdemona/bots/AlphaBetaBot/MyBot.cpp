@@ -207,7 +207,7 @@ int MyBot::minimax(OthelloBoard &board, int max_depth, Turn turn, int alpha, int
 		}
 	}
 	else {
-		return heuristic3(board_copy);
+		return heuristic1(board_copy);
 		// return 0;
 	}
 }

@@ -53,17 +53,59 @@ MyBot::MyBot( Turn turn )
 
 Move MyBot::play( const OthelloBoard& board )
 {
+	/*
+	* This functions returns the best move in 2 seconds for a particular heuristic
+	*/
+
 	start = chrono::steady_clock::now();
+
+	/*
+	* getValidMoves return the available moves for particular
+	* state in the board storing these moves in a list 
+	* they are children in our tree
+	*/
+
     list<Move> moves = board.getValidMoves( turn );
-    // int randNo = rand() % moves.size();
+
+    /* 
+    * storing first move in iterator it 
+    */
+
     list<Move>::iterator it = moves.begin();
+
+    /* 
+    * declaring some variable for getting best move,bestscore
+    */
+
 	Move best_move = *it;
 	int best_score = minimum_int;
 	int max_depth = 0;
+
+	/*
+	* iterating tree till it reaches either leaf node
+	* or time becomes greater than 2 seconds
+	*/
+
 	for (; ; max_depth++) {
 		list<Move>::iterator it = moves.begin();
+
+		/*
+		* iterating over all valid moves/childrens to get the best move
+		*/
+
 		for (; it != moves.end(); it++) {
+
+			/* 
+			* since OthelloBoard is a const so we can't change its value
+			* so making copy of it for using it further
+			*/
+
 			OthelloBoard board_copy = OthelloBoard(board);
+
+			/*
+			* recursively finding the best move by applying minimax algorithm
+			*/
+
 			int value = minimax(board_copy, max_depth, this->turn, minimum_int, maximum_int, *it);
 			// int value = 0;
 			if (value == minimum_int) {
@@ -75,23 +117,44 @@ Move MyBot::play( const OthelloBoard& board )
 				best_move = *it;
 			}
 		}
-		// if (max_depth >= 2) {
-			// return best_move;
-		// }
 	}
 
     return best_move;
 }
 
 int MyBot::minimax(OthelloBoard &board, int max_depth, Turn turn, int alpha, int beta, Move move) {
+	/*
+	* The minimax algorithm searches the game tree till depth k
+	* in a depth-first manner from left to right.
+	* It applies the minimax rule to determine the value of the root node.
+	* Once the algorithm reaches the terminal node,
+	* the algorithm applies the evaluation function (heuristic function) 
+	*instead of making a recursive call.
+	*/
+
+	/* 
+	* If time becomes greater than 1.6 seconds we stops searching.
+	*/
+
 	if (time_taken() > 1600) {
 		return minimum_int;
 	}
-	
+
+	/* 
+	* Making othelloboard copy to apply particular move and
+	* and select best move recursively.
+	*/
+
 	OthelloBoard board_copy = OthelloBoard(board);
 	board_copy.makeMove(turn, move);
+
+	/*
+	* Storing childrens in list of descendants
+	*/
+
 	list<Move> descendants = board_copy.getValidMoves(other(turn));
 	
+
 	if (max_depth != 0) {
 		if (this->turn != turn) {
 			int best = minimum_int;
@@ -150,6 +213,14 @@ int MyBot::minimax(OthelloBoard &board, int max_depth, Turn turn, int alpha, int
 }
 
 int MyBot::heuristic1(OthelloBoard &board) {
+	
+	/*
+	* In this heuristic we are calculating 
+	* the difference between the number of RED coins on the board and the BLACK coins on the board.
+	* Hence, this heuristic determines whether the player is leading or
+	* falling behind in comparison to his/her opponent.
+	*/
+
 	if (this->turn == RED) {
 		return (board.getRedCount() - board.getBlackCount());
 	}
@@ -159,6 +230,14 @@ int MyBot::heuristic1(OthelloBoard &board) {
 }
 
 int MyBot::heuristic2(OthelloBoard &board) {
+
+	/* 
+	* In the game of Othello, the corner positions are one of strongest positions.
+	* The player who occupies more number of corner positions has a higher chance of winning.
+	* Hence, this heuristic calculates the 
+	* difference between the number of corners occupied by me and my opponent.
+	*/
+
 	vector <pair <int, int>> cor;
 	cor.push_back(make_pair(0, 0));
 	cor.push_back(make_pair(0, 7));
@@ -180,6 +259,15 @@ int MyBot::heuristic2(OthelloBoard &board) {
 }
 
 int MyBot::heuristic3(OthelloBoard &board) {
+
+	/* 
+	* The player who has a higher number of
+	* available positions/moves than his/her opponent has higher chances of winning
+	* as it is more likely that the move is better. 
+	* Hence, this heuristic calculates the 
+	* difference between the number of available moves for me and my opponent.
+	*/
+
 	return (board.getValidMoves(this->turn).size() - board.getValidMoves(other(this->turn)).size());
 }
 
